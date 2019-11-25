@@ -1,3 +1,8 @@
+"""
+GENERATE ARTIFICIAL MUSIC BASELINE METHOD
+Code mostly taken from: https://towardsdatascience.com/how-to-generate-music-using-a-lstm-neural-network-in-keras-68786834d4c5
+"""
+
 from music21 import converter, instrument, note, chord, stream
 import os
 import numpy
