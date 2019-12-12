@@ -13,7 +13,7 @@ import pickle
 
 def getNotes():
     notes = []
-
+    # out_nodes = []
     # get all midi files simultaneously
     training_folder = 'midi_data/'
     midi_files = [file for file in os.listdir(training_folder) if os.path.isfile(os.path.join(training_folder, file)) and os.path.splitext(file)[1] == '.mid']
@@ -32,14 +32,23 @@ def getNotes():
         for element in midi_notes:
             if(isinstance(element, note.Note)):
                 notes.append(str(element.pitch))
+                #out_nodes.append(element)
             elif(isinstance(element, chord.Chord)):
                 notes.append('.'.join(str(n) for n in element.normalOrder))
+                #out_nodes.extend(element.notes)
+            # if(len(out_nodes) > 100):
+            #     get_midi_sequence(out_nodes)
+            #     break
 
     # with open('data/notes', 'wb') as filepath:
     #     pickle.dump(notes, filepath)
 
     a_vocab = len(set(notes))
     return notes,a_vocab
+
+# def get_midi_sequence(notes):
+#     midi_stream = stream.Stream(notes)
+#     midi_stream.write('midi', fp='example_input.mid')
 
 def prepare_sequences(notes, a_vocab):
     seq_len = 100
@@ -195,5 +204,5 @@ def generate_new_midi():
     prediction_seq = generateNotes(generativeModel, network_input, pitch_names, a_vocab)
     create_midi(prediction_seq)
 
-#train_network()
+train_network()
 generate_new_midi()
